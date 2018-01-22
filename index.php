@@ -8,51 +8,51 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <?php
-      define("TITLE","Clickbait Headline Neutralizer");
-    
-    //PHP CONSOLE LOG FUNCTION
-     function logConsole($name, $data = NULL, $jsEval = FALSE)
- {
-      if (! $name) return false;
+        define("TITLE","Clickbait Headline Neutralizer");
 
-      $isevaled = false;
-      $type = ($data || gettype($data)) ? 'Type: ' . gettype($data) : '';
+            //PHP CONSOLE LOG FUNCTION
+        function logConsole($name, $data = NULL, $jsEval = FALSE)
+         {
+              if (! $name) return false;
 
-      if ($jsEval && (is_array($data) || is_object($data)))
-      {
-           $data = 'eval(' . preg_replace('#[\s\r\n\t\0\x0B]+#', '', json_encode($data)) . ')';
-           $isevaled = true;
-      }
-      else
-      {
-           $data = json_encode($data);
-      }
+              $isevaled = false;
+              $type = ($data || gettype($data)) ? 'Type: ' . gettype($data) : '';
 
-      # sanitalize
-      $data = $data ? $data : '';
-      $search_array = array("#'#", '#""#', "#''#", "#\n#", "#\r\n#");
-      $replace_array = array('"', '', '', '\\n', '\\n');
-      $data = preg_replace($search_array,  $replace_array, $data);
-      $data = ltrim(rtrim($data, '"'), '"');
-      $data = $isevaled ? $data : ($data[0] === "'") ? $data : "'" . $data . "'";
+              if ($jsEval && (is_array($data) || is_object($data)))
+              {
+                   $data = 'eval(' . preg_replace('#[\s\r\n\t\0\x0B]+#', '', json_encode($data)) . ')';
+                   $isevaled = true;
+              }
+              else
+              {
+                   $data = json_encode($data);
+              }
 
-$js = <<<JSCODE
-\n<script>
- // fallback - to deal with IE (or browsers that don't have console)
- if (! window.console) console = {};
- console.log = console.log || function(name, data){};
- // end of fallback
+              # sanitalize
+              $data = $data ? $data : '';
+              $search_array = array("#'#", '#""#', "#''#", "#\n#", "#\r\n#");
+              $replace_array = array('"', '', '', '\\n', '\\n');
+              $data = preg_replace($search_array,  $replace_array, $data);
+              $data = ltrim(rtrim($data, '"'), '"');
+              $data = $isevaled ? $data : ($data[0] === "'") ? $data : "'" . $data . "'";
 
- console.log('$name');
- console.log('------------------------------------------');
- console.log('$type');
- console.log($data);
- console.log('\\n');
-</script>
-JSCODE;
+        $js = <<<JSCODE
+        \n<script>
+         // fallback - to deal with IE (or browsers that don't have console)
+         if (! window.console) console = {};
+         console.log = console.log || function(name, data){};
+         // end of fallback
 
-      echo $js;
- } //end php console log function
+         console.log('$name');
+         console.log('------------------------------------------');
+         console.log('$type');
+         console.log($data);
+         console.log('\\n');
+        </script>
+        JSCODE;
+
+              echo $js;
+         } //end php console log function
 ?>
 
         <title>
@@ -144,14 +144,15 @@ JSCODE;
         <div class="row">
             <div class="col-sm-6 before-phrase">
                 <?php if(isset ($_POST["fix_submit"])) {
-    echo "<h1>Clickbait headline:</h1><br><br>";
-        
-    echo $_POST["clickbait_headline"];} ?>
+                        echo "<h1>Clickbait headline:</h1><br><br>";
+                        echo $_POST["clickbait_headline"];} 
+                ?>
             </div>
             <div class="col-sm-6 after-phrase">
                 <?php if(isset ($_POST["fix_submit"])) {
-    echo "<h1>Honest headline:</h1><br><br>";
-    convert_to_honest();} ?>
+                        echo "<h1>Honest headline:</h1><br><br>";
+                        convert_to_honest();} 
+                ?>
             </div>
 
         </div>
@@ -178,44 +179,44 @@ JSCODE;
             </div>
         </div>
 
-        <?php
-    function convert_to_honest(){
-            logConsole("Is the form submitted?","Yes",true); 
-          $honestHeadline=strtolower($_POST["clickbait_headline"]);
-    $a= array(
-        "scientists",
-        "doctors",
-        "hate",
-        "stupid",
-        "weird",
-        "simple", 
-        "trick",
-        "shocked me",
-        "you'll never believe",
-        "hack",
-        "epic",
-        "unbelievable"
-    );
-     $b=array(
-        "so-called scientists",
-         "self-proclaimed doctors",
-         "are not threatened by",
-         "average",
-         "completely normal",
-         "ineffective",
-         "method",
-         "did not shock me at all",
-         "you'll not be surprised",
-         "slightly improve",
-         "boring",
-         "normal"
-     );
-     $honestHeadline=str_replace($a,$b,$honestHeadline);
-     $honestHeadline=ucfirst($honestHeadline);
-  echo $honestHeadline;
-        
-       
-    } ?>
+     <?php
+        function convert_to_honest()
+            {
+            logConsole("Is the form submitted?", "Yes", true);
+            $honestHeadline = strtolower($_POST["clickbait_headline"]);
+            $a = array(
+                "scientists",
+                "doctors",
+                "hate",
+                "stupid",
+                "weird",
+                "simple",
+                "trick",
+                "shocked me",
+                "you'll never believe",
+                "hack",
+                "epic",
+                "unbelievable"
+            );
+            $b = array(
+                "so-called scientists",
+                "self-proclaimed doctors",
+                "are not threatened by",
+                "average",
+                "completely normal",
+                "ineffective",
+                "method",
+                "did not shock me at all",
+                "you'll not be surprised",
+                "slightly improve",
+                "boring",
+                "normal"
+            );
+            $honestHeadline = str_replace($a, $b, $honestHeadline);
+            $honestHeadline = ucfirst($honestHeadline);
+            echo $honestHeadline;
+            } 
+        ?>
             <!-- Bootstrap core JavaScript -->
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
