@@ -213,7 +213,7 @@ JSCODE;
                 "normal"
             );
             $honestHeadline = str_replace($a, $b, $honestHeadline);
-            $honestHeadline = ucfirst($honestHeadline);
+            $honestHeadline = ucwords($honestHeadline);
             echo $honestHeadline;
             } 
         ?>
